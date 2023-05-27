@@ -14,6 +14,7 @@ class MyForm extends StatefulWidget {
 }
 
 class _MyFormState extends State<MyForm> {
+  bool _isHidden = true;
   @override
   final formkey = GlobalKey<FormState>();
 
@@ -62,11 +63,16 @@ class _MyFormState extends State<MyForm> {
                                 ),
                                 Padding(padding: EdgeInsets.only(bottom: 10)),
                                 TextFormField(
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     icon: const Icon(Icons.lock),
                                     hintText: 'Enter Password',
                                     labelText: 'Password',
+                                    suffixIcon: InkWell(
+                                      onTap: _togglePasswordView,
+                                      child: Icon(Icons.visibility),
+                                    ),
                                   ),
+                                  obscureText: _isHidden,
                                   validator: (value) {
                                     if (value == null ||
                                         value.length < 10 ||
@@ -106,5 +112,11 @@ class _MyFormState extends State<MyForm> {
                 ),
               );
             }))));
+  }
+
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 }
